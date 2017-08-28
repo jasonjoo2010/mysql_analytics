@@ -115,9 +115,9 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 				//printf("Destination Port:%d\n", ntohs(tcp->th_dport));
 				//printf("Sequence Number:%u\n", ntohl(tcp->th_seq));
 				//deal with data
-				len -= tcp->th_offx2 * 4;
+				len -= (tcp->th_offx2 >> 4) * 4;
 				if (len > 0) {
-					mysql_payload *payload = (unsigned char *)tcp + tcp->th_offx2 * 4;
+					mysql_payload *payload = (unsigned char *)tcp + (tcp->th_offx2 >> 4) * 4;
 					gettimeofday(&tm, NULL);
 					long tm_ms = tm.tv_sec * 1000 + tm.tv_usec / 1000.0;
 					if (serverAddr == ip->ip_dst.s_addr && ntohs(tcp->th_dport) == serverPort) {
