@@ -127,13 +127,15 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 							char sql[len];
 							memset(sql, 0, len);
 							memcpy(sql, &payload->params, payload->len - 1);
-							printf("%ld\t%s:%d\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport), inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
+							printf("%ld\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport));
+							printf("%s:%d\t", inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
 							printf("%s", sql);
 							printf("\tLINE_END\n");
 						}
 					} else {
 						//reponse
-						printf("%ld\t%s:%d\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport), inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
+						printf("%ld\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport));
+						printf("%s:%d\t", inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
 						mysql_response *response = (mysql_response *)payload;
 						if (response->type == 0x00) {
 							//ok
