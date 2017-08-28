@@ -232,18 +232,19 @@ void packet_handler(u_char *args, const struct pcap_pkthdr *header,
 
 int main(int argc, char *argv[]) {
 	pcap_t *pcap = 0;
-	const char *dev = "en0";
 	char filter_str[512] = {0};
 	char errbuf[PCAP_ERRBUF_SIZE];
 	int status;
 	const char *filter = "host %s and port %d";
 	struct bpf_program fp;
-	if (argc != 3) {
-		printf("usage: mysql_analytics <mysql host ip> <port>\n");
+	char *dev;
+	if (argc != 4) {
+		printf("usage: mysql_analytics <ethernet device name> <mysql host ip> <port>\n");
 		return 1;
 	}
-	serverHost = argv[1];
-	serverPort = atoi(argv[2]);
+	dev = argv[1];
+	serverHost = argv[2];
+	serverPort = atoi(argv[3]);
 	serverAddr = inet_addr(serverHost);
 	sprintf(filter_str, filter, serverHost, serverPort);
 	printf("filter: %s\n", filter_str);
