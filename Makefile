@@ -1,5 +1,5 @@
 mysql_analytics: main.o
-	cc -o mysql_analytics -lpcap main.o
+	cc -o mysql_analytics main.o -lpcap
 
 all: mysql_analytics
 
