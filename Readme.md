@@ -12,4 +12,7 @@ mysql_analytics eth0 192.168.123.3 3306
 对去往指定的mysql实例的流量进行分析。
 
 如果多个目标，可同时运行多个程序。
+## CentOS 5.x & 7.x
+yum install mysql_analytics
+
 
