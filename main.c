@@ -61,6 +61,8 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 	struct icmp *icmp;
 	struct timeval tm;
 	int len = pack->len;
+	char *addr[20];
+	char *addr_p;
 	buf = content;
 	//printf("==================================================\n");
 	/*printf("The Frame is \n");
@@ -127,15 +129,19 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 							char sql[len];
 							memset(sql, 0, len);
 							memcpy(sql, &payload->params, payload->len - 1);
-							printf("%ld\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport));
-							printf("%s:%d\t", inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
+							addr_p = inet_ntop(AF_INET, &ip->ip_src, addr, sizeof(addr));
+							printf("%ld\t%s:%d\t", tm_ms, (addr_p ? addr_p : "null"), ntohs(tcp->th_sport));
+							addr_p = inet_ntop(AF_INET, &ip->ip_dst, addr, sizeof(addr));
+							printf("%s:%d\t", (addr_p ? addr_p : "null"), ntohs(tcp->th_dport));
 							printf("%s", sql);
 							printf("\tLINE_END\n");
 						}
 					} else {
 						//reponse
-						printf("%ld\t%s:%d\t", tm_ms, inet_ntoa(ip->ip_src), ntohs(tcp->th_sport));
-						printf("%s:%d\t", inet_ntoa(ip->ip_dst), ntohs(tcp->th_dport));
+						addr_p = inet_ntop(AF_INET, &ip->ip_src, addr, sizeof(addr));
+						printf("%ld\t%s:%d\t", tm_ms, (addr_p ? addr_p : "null"), ntohs(tcp->th_sport));
+						addr_p = inet_ntop(AF_INET, &ip->ip_dst, addr, sizeof(addr));
+						printf("%s:%d\t", (addr_p ? addr_p : "null"), ntohs(tcp->th_dport));
 						mysql_response *response = (mysql_response *)payload;
 						if (response->type == 0x00) {
 							//ok
