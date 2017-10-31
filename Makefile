@@ -1,5 +1,5 @@
 mysql_analytics: main.o
-	cc -o mysql_analytics main.o -lpcap -ltcmalloc
+	cc -o mysql_analytics main.o -lpcap -ltcmalloc -lpthread
 
 all: mysql_analytics
 
