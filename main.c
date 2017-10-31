@@ -103,6 +103,7 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 		const u_char *content) {
 	//TODO 粘包算法
 	u_char *buf = malloc(pack->caplen);
+	memset(buf, 0, pack->caplen);
 	memcpy(buf, content, pack->caplen);
 	queue_in(buf, pack->caplen);
 	return 0;
