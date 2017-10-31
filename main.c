@@ -126,9 +126,10 @@ int call(u_char *argument, const struct pcap_pkthdr* pack,
 						//request
 						if (payload->cmd == 0x03) {
 							//cmd_query
-							char sql[len];
-							memset(sql, 0, len);
-							memcpy(sql, &payload->params, payload->len - 1);
+							int sql_len = payload->len - 1;
+							char sql[sql_len + 1];
+							memset(sql, 0, sql_len + 1);
+							memcpy(sql, &payload->params, sql_len);
 							addr_p = inet_ntop(AF_INET, &ip->ip_src, addr, sizeof(addr));
 							printf("%ld\t%s:%d\t", tm_ms, (addr_p ? addr_p : "null"), ntohs(tcp->th_sport));
 							addr_p = inet_ntop(AF_INET, &ip->ip_dst, addr, sizeof(addr));
